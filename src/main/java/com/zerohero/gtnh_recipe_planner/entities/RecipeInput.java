@@ -23,65 +23,72 @@ public class RecipeInput extends BaseEntity {
     @Column(name = "item_type", nullable = false)
     private ItemType itemType;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    @JoinColumn(name = "item_id")
     private Item item;
 
-    @Column(name = "item_id")
-    private Long itemId;
-
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fluid_id", insertable = false, updatable = false)
+    @JoinColumn(name = "fluid_id")
     private Fluid fluid;
 
-    @Column(name = "fluid_id")
-    private Long fluidId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ore_dict_id", insertable = false, updatable = false)
+    @JoinColumn(name = "ore_dict_id")
     private OreDictionary oreDict;
 
-    @Column(name = "ore_dict_id")
-    private Long oreDictId;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "item_id", insertable = false, updatable = false)
+//    private Item item;
+//
+//
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "fluid_id", insertable = false, updatable = false)
+//    private Fluid fluid;
+//
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ore_dict_id", insertable = false, updatable = false)
+//    private OreDictionary oreDict;
+
 
     @Column(nullable = false)
     private int amount;
 
-    public Long getEntityId() {
-        return switch (itemType) {
-            case ITEM -> itemId;
-            case FLUID -> fluidId;
-            case ORE_DICT -> oreDictId;
-        };
-    }
-
-    public void setEntityId(Long id) {
-        if (id == null) {
-            this.itemId = null;
-            this.fluidId = null;
-            this.oreDictId = null;
-            return;
-        }
-
-        switch (itemType) {
-            case ITEM -> {
-                this.itemId = id;
-                this.fluidId = null;
-                this.oreDictId = null;
-            }
-            case FLUID -> {
-                this.fluidId = id;
-                this.itemId = null;
-                this.oreDictId = null;
-            }
-            case ORE_DICT -> {
-                this.oreDictId = id;
-                this.itemId = null;
-                this.fluidId = null;
-            }
-        }
-    }
+//    public Long getEntityId() {
+//        return switch (itemType) {
+//            case ITEM -> itemId;
+//            case FLUID -> fluidId;
+//            case ORE_DICT -> oreDictId;
+//        };
+//    }
+//
+//    public void setEntityId(Long id) {
+//        if (id == null) {
+//            this.itemId = null;
+//            this.fluidId = null;
+//            this.oreDictId = null;
+//            return;
+//        }
+//
+//        switch (itemType) {
+//            case ITEM -> {
+//                this.itemId = id;
+//                this.fluidId = null;
+//                this.oreDictId = null;
+//            }
+//            case FLUID -> {
+//                this.fluidId = id;
+//                this.itemId = null;
+//                this.oreDictId = null;
+//            }
+//            case ORE_DICT -> {
+//                this.oreDictId = id;
+//                this.itemId = null;
+//                this.fluidId = null;
+//            }
+//        }
+//    }
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;

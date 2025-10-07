@@ -9,6 +9,7 @@ import java.util.List;
 public class ItemDataDto {
     private String name;
     private String unlocalizedName;
+    private String modItemId;
     private Integer metadata;
     private String item;
     private List<String> oreDict;

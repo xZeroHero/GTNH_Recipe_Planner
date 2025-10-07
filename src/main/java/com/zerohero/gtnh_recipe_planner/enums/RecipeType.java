@@ -4,5 +4,7 @@ public enum RecipeType {
     GREG_MACHINE,
     FURNACE,
     SHAPED,
-    SHAPELESS
+    SHAPELESS,
+    BWNBT_RECIPE,
+    UNKNOWN
 }

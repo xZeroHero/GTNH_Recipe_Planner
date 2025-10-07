@@ -2,31 +2,38 @@
 package com.zerohero.gtnh_recipe_planner.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = ItemStackDto.class, name = "item"),
-        @JsonSubTypes.Type(value = FluidStackDto.class, name = "fluid"),
-        @JsonSubTypes.Type(value = OreDictDto.class, name = "oreDict")
-})
 public class BaseRecipeItemDto {
-    protected Integer metadata;
-    protected String item;
-    protected Integer amount;
-    protected String displayName;
-    protected String name;
-    protected String oreDict;
-    protected String fluid;
+    // Common fields
+    @JsonProperty("type")
+    protected String type;
 
-    public String getType() {
-        if (item != null) return "item";
-        if (fluid != null) return "fluid";
-        if (oreDict != null) return "oreDict";
-        return null;
-    }
+    @JsonProperty("amount")
+    protected Integer amount;
+
+    @JsonProperty("unlocalizedName")
+    protected String unlocalizedName;
+
+    // Item specific fields
+    @JsonProperty("modItemId")
+    protected String modItemId;
+
+    @JsonProperty("metadata")
+    protected Integer metadata;
+
+    // Fluid specific fields
+    @JsonProperty("modFluidId")
+    protected String modFluidId;
+
+    //OreDict specific fields
+    @JsonProperty("oreDict")
+    protected List<String> oreDict;
 }

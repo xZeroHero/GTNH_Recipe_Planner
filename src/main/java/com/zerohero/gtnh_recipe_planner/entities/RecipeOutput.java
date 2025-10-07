@@ -20,53 +20,19 @@ public class RecipeOutput extends BaseEntity {
     private ItemType itemType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    @JoinColumn(name = "item_id")
     private Item item;
 
-    @Column(name = "item_id")
-    private Long itemId;
-
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fluid_id", insertable = false, updatable = false)
+    @JoinColumn(name = "fluid_id")
     private Fluid fluid;
-
-    @Column(name = "fluid_id")
-    private Long fluidId;
 
     @Column(nullable = false)
     private int amount;
 
     private int chance = 100; // 100% by default
 
-    public Long getEntityId() {
-        return switch (itemType) {
-            case ITEM -> itemId;
-            case FLUID -> fluidId;
-            case ORE_DICT -> throw new IllegalStateException("Recipe outputs cannot be ore dictionary entries");
-        };
-    }
 
-    public void setEntityId(Long id) {
-        if (id == null) {
-            this.itemId = null;
-            this.fluidId = null;
-            return;
-        }
-
-        switch (itemType) {
-            case ITEM -> {
-                this.itemId = id;
-                this.fluidId = null;
-            }
-            case FLUID -> {
-                this.fluidId = id;
-                this.itemId = null;
-            }
-            case ORE_DICT ->
-                    throw new IllegalArgumentException("Recipe outputs cannot be ore dictionary entries");
-        }
-    }
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;

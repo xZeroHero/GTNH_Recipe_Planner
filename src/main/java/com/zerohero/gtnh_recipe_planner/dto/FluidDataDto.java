@@ -8,6 +8,7 @@ import lombok.Data;
 public class FluidDataDto {
     private String name;
     private String unlocalizedName;
+    private String modFluidId;
     private Integer modId;
     private Integer density;
     private Integer temperature;

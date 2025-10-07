@@ -19,6 +19,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class Fluid extends NamedEntity {
 
+    private String modFluidId;
     private Integer modId;
     private Integer density;
     private Integer temperature;

@@ -23,6 +23,7 @@ public class Recipe {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false, columnDefinition = "VARCHAR(50)")
     private RecipeType type;
 
     private String sourceFile;  // e.g., "gregtech_gt.recipe.thermalcentrifuge.json"

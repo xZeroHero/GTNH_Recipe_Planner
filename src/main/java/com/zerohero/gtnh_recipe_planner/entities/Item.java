@@ -19,7 +19,7 @@ import java.util.Set;
 public class Item extends NamedEntity {
     private Integer metadata;
     private String nbt;
-    private String ModItemId;
+    private String modItemId;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
