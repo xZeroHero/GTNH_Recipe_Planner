@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Repository
 public interface ItemRepository extends BaseRepository<Item, Long> {
+
     Optional<Item> findByUnlocalizedName(String unlocalizedName);
 
     @Query("SELECT i.unlocalizedName FROM Item i")
@@ -38,5 +39,8 @@ public interface ItemRepository extends BaseRepository<Item, Long> {
         List<Item> items = findByModItemIdAndMetadata(modItemId, metadata);
         return items.isEmpty() ? Optional.empty() : Optional.of(items.get(0));
     }
+
+    @Query("SELECT DISTINCT i FROM Item i LEFT JOIN FETCH i.oreDictionaries")
+    List<Item> findAllWithOreDictionaries();
 
 }

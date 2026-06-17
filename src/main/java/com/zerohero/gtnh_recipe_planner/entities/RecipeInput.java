@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.zerohero.gtnh_recipe_planner.enums.ItemType.*;
 
 @Entity
@@ -32,9 +35,13 @@ public class RecipeInput extends BaseEntity {
     @JoinColumn(name = "fluid_id")
     private Fluid fluid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ore_dict_id")
-    private OreDictionary oreDict;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "recipe_input_oredict",
+            joinColumns = @JoinColumn(name = "recipe_input_id"),
+            inverseJoinColumns = @JoinColumn(name = "ore_dict_id")
+    )
+    private Set<OreDictionary> oreDict = new HashSet<>();
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "item_id", insertable = false, updatable = false)
@@ -107,7 +114,7 @@ public class RecipeInput extends BaseEntity {
         this.itemType = ItemType.FLUID;
     }
 
-    public void setOreDict(OreDictionary oreDict) {
+    public void setOreDict(Set<OreDictionary> oreDict) {
         this.oreDict = oreDict;
         this.itemType = ItemType.ORE_DICT;
     }

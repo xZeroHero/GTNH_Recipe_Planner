@@ -21,7 +21,7 @@ public class Item extends NamedEntity {
     private String nbt;
     private String modItemId;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "item_ore_dictionary",
             joinColumns = @JoinColumn(name = "item_id"),

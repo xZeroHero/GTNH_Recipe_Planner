@@ -360,16 +360,16 @@ public class JsonImportService {
                 if (dto.getAmount() != null) input.setAmount(dto.getAmount());
                 else input.setAmount(1);
                 inputs.add(input);
-            } else if (dto.getType().equalsIgnoreCase("oreDict")) {
-                for (String oreName : dto.getOreDict()) {
-                    OreDictionary oreDict = oreDictCache.get(oreName);
-                    if (oreDict == null) oreDict = missingOreDict;
-                    input.setOreDict(oreDict);
-                    input.setItemType(ItemType.ORE_DICT);
-                    if (dto.getAmount() != null) input.setAmount(dto.getAmount());
-                    else input.setAmount(1);
-                    inputs.add(input);
-                }
+            } else if (dto.getOreDict() != null && !dto.getOreDict().isEmpty()) {
+                Set<OreDictionary> oreDicts = dto.getOreDict().stream()
+                        .map(oreName -> oreDictCache.get(oreName))
+                        .collect(Collectors.toSet());
+                if (oreDicts.isEmpty()) oreDicts.add(missingOreDict) ;
+                input.setOreDict(oreDicts);
+                if (dto.getAmount() != null) input.setAmount(dto.getAmount());
+                else input.setAmount(1);
+                if (input.getAmount() < 1) input.setAmount(1);
+                inputs.add(input);
             }
         }
         recipe.setInputs(inputs);
@@ -672,8 +672,7 @@ public class JsonImportService {
         return missingItem;
     }
 
-    @PostConstruct
-    private void initPlaceholders() {
+    public void initPlaceholders() {
         // Create placeholder item
         missingItem = new Item();
         missingItem.setUnlocalizedName("missing_item");
